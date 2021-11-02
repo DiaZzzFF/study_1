@@ -66,13 +66,6 @@ const optimizeImages = () => {
 
 exports.images = optimizeImages;
 
-const copyImages = () => {
-  return gulp.src("source/img/**/*.{png,jpg,svg}")
-    .pipe(gulp.dest("build/img"))
-}
-
-exports.images = copyImages;
-
 // WebP
 
 const createWebp = () => {
@@ -151,29 +144,12 @@ const watcher = () => {
   gulp.watch("source/img/icon-*.svg", gulp.series(sprite, html, refresh));
 }
 
-// Build
-
-const build = gulp.series(
-  clean,
-  copy,
-  optimizeImages,
-  gulp.parallel(
-    styles,
-    scripts,
-    html,
-    sprite,
-    createWebp
-  ),
-);
-
-exports.build = build;
-
 // Default
 
 exports.default = gulp.series(
   clean,
   copy,
-  copyImages,
+  optimizeImages,
   gulp.parallel(
     styles,
     scripts,
